@@ -1,0 +1,10 @@
+const input = require('fs')
+  .readFileSync('/dev/stdin')
+  .toString()
+  .trim()
+  .split('\n')
+  .slice(1)
+  .map((s) => s.at(0) + s.at(-1))
+  .join('\n')
+
+console.log(input)
