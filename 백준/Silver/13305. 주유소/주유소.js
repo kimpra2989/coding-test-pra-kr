@@ -1,31 +1,22 @@
-let fs = require("fs");
-let input = fs.readFileSync("/dev/stdin").toString().split("\n");
+// .뺴고 제출
+const input = require('fs')
+  .readFileSync('/dev/stdin')
+  .toString()
+  .trim()
+  .split('\n')
 
-// console.log(input);
-const len = input[1].split(" ").map(Number);
-const price = input[2].split(" ").map(Number);
-price.pop();
-// console.log(len, price)
+const diss = input[1].split(' ').map(BigInt)
+const prices = input[2].split(' ').slice(0, -1).map(BigInt)
 
-let result = 0;
-for (let i = 0; i < price.length - 1; i++) {
-  let std = price[i];
-  let total_Len = len[i];
-  let skip = 0;
-  for (let j = i + 1; j < price.length; j++) {
-    if (std > price[j]) {
-      result += total_Len * price[i];
-      break;
-    }
+let min = BigInt(10e9)
+let cost = 0n
 
-    if (j == price.length - 1) {
-      total_Len += len[j];
-      result += total_Len * price[i];
-      break;
-    }
-    total_Len += len[j];
-    skip++;
+prices.forEach((price, idx) => {
+  if (min > price) {
+    min = price
   }
-  i += skip;
-}
-console.log(result);
+
+  cost += min * diss[idx]
+})
+
+console.log(cost.toString())
